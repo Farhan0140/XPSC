@@ -21,22 +21,29 @@ const int mod = 1e9 + 7;
 //_______________________________________________________________________________________________
 
 void solve() {
-    ll t, f = -1, l; cin >> t;
-    string s; cin >> s;
+    ll t; cin >> t;
 
-    // for(int i=0; i<t; i++) {
-    //     if(f == -1 && s[i] == 'B') {
-    //         f = i;
-    //     }
-    //     if(s[i] == 'B') {
-    //         l = i;
-    //     }
-    // }
+    map<string, string> New, old;
 
-    f = s.find('B');
-    l = s.rfind('B');
+    for(int i=0; i<t; i++) {
+        string s, s1; cin >> s >> s1;
 
-    out(abs(l-f) + 1);
+        if(old.find(s) != old.end()) {
+            string h = old[s];
+            New[h] = s1;
+
+            old.erase(s);
+            old[s1] = h;
+        } else {
+            New[s] = s1;
+            old[s1] = s;
+        }
+    }
+
+    out(New.size());
+    for(auto [x, y] : New) {
+        cout << x << " " << y << endl;
+    }
 }
 
 //_______________________________________________________________________________________________
@@ -44,7 +51,7 @@ void solve() {
  
 int main(){
     IOS;
-    tc solve();
+    solve();
     return 0;
 }
  

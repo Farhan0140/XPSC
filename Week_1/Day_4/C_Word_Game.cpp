@@ -21,22 +21,42 @@ const int mod = 1e9 + 7;
 //_______________________________________________________________________________________________
 
 void solve() {
-    ll t, f = -1, l; cin >> t;
-    string s; cin >> s;
+    ll t; cin >> t;
+    map<string, vector<int>> mp;
 
-    // for(int i=0; i<t; i++) {
-    //     if(f == -1 && s[i] == 'B') {
-    //         f = i;
+    for(int i=1; i<=3; i++) {
+        for(int j=0; j<t; j++) {
+            string s; cin >> s;
+
+            mp[s].push_back(i);
+        }
+    }
+
+    // for(auto [x, v]: mp) {
+    //     cout << x << "--> ";
+    //     for(auto person: v) {
+    //         cout << person << " ";
     //     }
-    //     if(s[i] == 'B') {
-    //         l = i;
-    //     }
+    //     cout << endl;
     // }
 
-    f = s.find('B');
-    l = s.rfind('B');
+    vector<int> Point(4, 0);
+    for(auto [x, v]: mp) {
+        vector<int> P = v;
 
-    out(abs(l-f) + 1);
+        if(P.size() == 1) {
+            Point[P[0]] += 3;
+        }
+        if(P.size() == 2) {
+            Point[P[0]]++;
+            Point[P[1]]++;
+        }
+    }
+
+    for(int i=1; i<=3; i++) {
+        cout << Point[i] << " ";
+    }
+    cout << "\n";
 }
 
 //_______________________________________________________________________________________________
