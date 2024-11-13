@@ -17,7 +17,25 @@ const int mod = 1e9 + 7;
 //_______________________________________________________________________________________________
 
 void solve() {
-    
+    ll n, c, h; cin >> n >> c >> h;
+    priority_queue<ll> st, cr;
+
+    for(int i=0; i<n; i++) {
+        ll it; cin >> it;
+        st.push(it);
+    }
+    for(int i=0; i<c; i++) {
+        ll it; cin >> it;
+        cr.push(it);
+    }
+
+    ll ans = 0;
+    while(!st.empty() && !cr.empty()) {
+        ans += min((cr.top() * h), st.top());
+        st.pop(); cr.pop();
+    }
+
+    out(ans);
 }
 
 //_______________________________________________________________________________________________
@@ -26,8 +44,8 @@ void solve() {
 int main(){
     IOS;
     /*
-    tc
     */
+    tc
       solve();
     return 0;
 }
