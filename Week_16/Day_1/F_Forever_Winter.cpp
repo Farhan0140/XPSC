@@ -148,16 +148,6 @@ void solve(int _c) {
         }
     }
     out(x, y);
-
-    
-    // out(leaf_nod);
-    // for(auto [x, y]: adj) {
-    //     cout << x << " --> ";
-    //     for(auto it: y) {
-    //         outs(it);
-    //     }
-    //     out();
-    // }
 }
 
 
