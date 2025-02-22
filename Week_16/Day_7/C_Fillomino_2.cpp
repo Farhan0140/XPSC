@@ -81,7 +81,21 @@ void to_lower(string &s) { transform(s.begin(), s.end(), s.begin(), :: tolower);
 ll gcd(ll a, ll b) { return __gcd(a, b);}
 ll lcm(ll a, ll b) { return ((a / __gcd(a, b)) * b);}
 
+ll n;
+vector<vector<ll>> arr(505, vector<ll>(505));
+vi main_arr(505);
 
+void DFS(ll i, ll j, ll val, ll cnt) {
+    if(cnt <= 0 || j < 0 || i >= n) { return; }
+
+    arr[i][j] = val;
+
+    if(j != 0 && arr[i][j-1] == 0) {
+        DFS(i, j-1, val, cnt-1);
+    } else {
+        DFS(i+1, j, val, cnt-1);
+    }
+}
 
 //___________________________________________________________________________________________________________________________________________________
 
@@ -103,29 +117,14 @@ int main(){
 
 
 void solve(int _c) {
-    ll n; in(n);
-    vector<vector<ll>> arr(n, vector<ll>(n));
+    in(n);
 
     in_range(i, 0, n-1) {
-        in_range(j, 0, n-1) {
-            arr[i][j] = 0;
-        }
+        in(main_arr[i]);
     }
 
     in_range(i, 0, n-1) {
-        ll x, a, b; in(x);
-
-        a = i;
-        b = i;
-        ll tmp = x;
-        while(x--) {
-            arr[a][b] = tmp;
-            if(b != 0 && arr[a][b - 1] == 0) { 
-                b--; 
-            } else {
-                a++;
-            }
-        }
+        DFS(i, i, main_arr[i], main_arr[i]);
     }
 
     in_range(i, 0, n-1) {
