@@ -133,7 +133,6 @@ void Update(ll Node, ll Begin, ll End, ll Index, ll Value) {
     
 }
 
-
 ll Query(ll Node, ll Begin, ll End, ll i, ll j) {
 
     if(End < i || Begin > j) {
