@@ -131,6 +131,7 @@ void Update(ll Node, ll Begin, ll End, ll Index, ll Value) {
 
     Tree[Node] = min( Tree[Left_Child], Tree[Right_Child] );
     
+    
 }
 
 
