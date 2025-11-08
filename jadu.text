@@ -1,0 +1,180 @@
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <math.h>
+#define PI 3.14159265358979323846 // Define the value of PI
+void display(void) {
+    //********************** Point *************************
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3d(1, 1, 1);
+    glPointSize(5);
+    glBegin(GL_POINTS);
+    glVertex2d(0.0, 0.0);
+    glEnd();
+    glFlush();
+    //********************** Line *************************
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3d(1, 1, 1);
+    glPointSize(5);
+    glBegin(GL_LINES);
+    glVertex2f(-10, -10);
+    glVertex2f(10, 10);
+    glEnd();
+    glFlush();
+    //********************** Triangle *************************
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3d(0.5, 0, 1);
+    glPointSize(5);
+    glBegin(GL_TRIANGLES);
+    glVertex2f(0.0, 20.0);
+    glVertex2f(-20.0, -20.0);
+    glVertex2f(20.0, -20.0);
+    glEnd();
+    glFlush();
+    //********************** Quad *************************
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3d(0.5, 0, 1);
+    glPointSize(5);
+    glBegin(GL_QUADS);
+    glVertex2f(-20, -20);
+    glVertex2f(20, -20);
+    glVertex2f(20, 20);
+    glVertex2f(-20, 20);
+    glEnd();
+    glFlush();
+    //********************** Pentagon *************************
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3d(0.5, 0, 1);
+    glPointSize(5);
+    glBegin(GL_QUADS);
+    glVertex2f(0, 30);
+    glVertex2f(28, 9);
+    glVertex2f(17, -24);
+    glVertex2f(-17, -24);
+    glVertex2f(-28, 9);
+    glEnd();
+    glFlush();
+    ********************* DDA *************************
+    Clear all pixels
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3d(1, 1, 1);
+    glPointSize(5);
+    int x1 = 0, y1 = 0, x2 = 10, y2 = 10;
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+    int steps = (abs(dx) > abs(dy)) ? abs(dx) : abs(dy);
+    float xInc = dx / steps;
+    float yInc = dy / steps;
+    float x = x1;
+    float y = y1;
+    for (int i = 0; i < steps; i++) {
+    glBegin(GL_POINTS);
+    glVertex2d(x, y);
+    glEnd();
+    x += xInc;
+    y += yInc;
+    }
+    glBegin(GL_POINTS);
+    glEnd();
+    glFlush();
+    // ************************* Bresenham ******************************
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3d(1, 1, 1);
+    glPointSize(5);
+    // define start and end points of the line
+    int x1 = 0, y1 = 0;
+    int x2 = 20, y2 = 10;
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int p = 2 * dy - dx;
+    int x = x1, y = y1;
+    glBegin(GL_POINTS);
+    for (int i = 0; i <= dx; i++) {
+    glVertex2i(x, y);
+    if (p >= 0) {
+    y++;
+    p += 2 * (dy - dx);
+    } else {
+    p += 2 * dy;
+    }
+    x++;
+    }
+    glEnd();
+    glFlush();
+}
+void init(void) {
+    // Set background color to black (R: 0, G: 0, B: 0)
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    // Initialize viewing values
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-100, 100, -100, 100, -1, 1); // 2D orthographic projection
+}
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(600, 600);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("Circle Demo");
+    init();
+    glutDisplayFunc(display); // Set the display function
+    glutMainLoop(); // Enter the main event loop
+    return 0;
+}
+
+
+
+// -----------------------------------------------------------------
+
+
+#include <GL/gl.h>
+#include <GL/glut.h>
+#include <math.h>
+
+#define PI 3.14159265358979323846
+
+float angle = 0.0f; // rotation angle
+
+void display(void) {
+    glClear(GL_COLOR_BUFFER_BIT);
+    glLoadIdentity();
+    
+    // Move to origin and rotate
+    glRotatef(-angle, 0.0f, 0.0f, 1.0f); // rotate around Z-axis
+    glColor3d(0.5, 0, 1);
+
+    glBegin(GL_QUADS);
+    glVertex2f(-20, -20);
+    glVertex2f(20, -20);
+    glVertex2f(20, 20);
+    glVertex2f(-20, 20);
+
+    glEnd();
+    glFlush();
+}
+
+void update(void) {
+    angle += 0.01f;
+    if (angle > 360) angle -= 360;
+    glutPostRedisplay();
+}
+
+void init(void) {
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(-100, 100, -100, 100, -1, 1);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(600, 600);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("Rotating Triangle");
+    init();
+    glutDisplayFunc(display);
+    glutIdleFunc(update);
+    glutMainLoop();
+    return 0;
+}
